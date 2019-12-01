@@ -12,7 +12,7 @@ public class PatientManager {
         patients = new ArrayList<>();
         priorityPatients = new ArrayList<>();
         regularPatients = new ArrayList<>();
-        numpatients = 0;
+        numpatients = 1;
     }
 
     public void addPatient(Patient patient) {
@@ -31,19 +31,11 @@ public class PatientManager {
 
     public void searchForPrioritySymptoms() {
         for (Patient p : patients) {
-            for (Symptom s: p.getSymptoms()) {
-                if (s.getName().equals("chest pain") || s.getName().equals("difficulty breathing") || s.getName().equals("abdominal pain")) {
-                }
-            }
-
-            for (Symptom s: p.getSymptoms()) {
-                if (s.getName().equals("chest pain") || s.getName().equals("difficulty breathing") || s.getName().equals("abdominal pain")
-                        || (s.equals("fever") && p.getAge() < 12)) {
+            for (String s: p.getSymptoms()) {
+                if (s.equals("chest pain") || s.equals("difficulty breathing") || s.equals("abdominal pain")) {
                     p.setPriority(true);
-                    patients.remove(p);
                     priorityPatients.add(p);
                 } else {
-                    patients.remove(p);
                     regularPatients.add(p);
                 }
             }
@@ -53,7 +45,17 @@ public class PatientManager {
     public void sortPatients() {
         priorityPatients.sort(Comparator.comparing(Patient::getSeverity).reversed());
         regularPatients.sort(Comparator.comparing(Patient::getSeverity).reversed());
-        patients.addAll(priorityPatients);
-        patients.addAll(regularPatients);
+        for (Patient p : priorityPatients) {
+            System.out.println(p.getID());
+            for (String s : p.getSymptoms()) {
+                System.out.println(s);
+            }
+        }
+        for (Patient p : regularPatients) {
+            System.out.println(p.getID());
+            for (String s : p.getSymptoms()) {
+                System.out.println(s);
+            }
+        }
     }
 }

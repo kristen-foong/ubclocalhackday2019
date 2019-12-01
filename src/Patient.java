@@ -9,9 +9,7 @@ public class Patient {
     int age;
     int severity = 0;
     boolean medication;
-    boolean drinking;
-    boolean smoking;
-    ArrayList<Symptom> symptoms;
+    ArrayList<String> symptoms;
     String waittime;
     long starttime;
 
@@ -22,16 +20,17 @@ public class Patient {
     int cough = 3;
     int smallInjury = 2;
 
-    public Patient(int ID, String sex, int age, boolean medication,boolean drinking, boolean smoking) {
-        this.ID = ID;
+    public Patient(String sex, int age, boolean medication) {
         this.sex = sex;
         this.age = age;
         this.priority = false;
         this.medication = medication;
-        this.drinking = drinking;
-        this.smoking = smoking;
         symptoms = new ArrayList<>();
         setSeverity();
+    }
+
+    public void addSymptom(String s) {
+        symptoms.add(s);
     }
 
     public int getID() {return this.ID; }
@@ -44,19 +43,11 @@ public class Patient {
 
     public boolean getMedication() { return this.medication;}
 
-    public boolean getDrinking() {
-        return this.drinking;
-    }
-
-    public boolean getSmoking() {
-        return this.smoking;
-    }
-
     public int getSeverity() {
         return this.severity;
     }
 
-    public ArrayList<Symptom> getSymptoms() {
+    public ArrayList<String> getSymptoms() {
         return this.symptoms;
     }
 
@@ -72,16 +63,8 @@ public class Patient {
         this.medication = medication;
     }
 
-    public void setDrinking(boolean drinking) {
-        this.drinking = drinking;
-    }
-
-    public void setSmoking (boolean smoking) {
-        this.smoking = smoking;
-    }
-
     public void setSeverity() {
-        for (Symptom s : symptoms) {
+        for (String s : symptoms) {
             if (s.equals("chest pain")) {
                 severity = severity + chestPain;
             } else if (s.equals("difficulty breathing")) {
